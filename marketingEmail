@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AetherFlow Onboard</title>
+</head>
+<body style="margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; background-color:#f6f9fc;">
+
+  <!-- Wrapper -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td align="center" style="padding:0;">
+
+        <!-- Container -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-top:20px;">
+
+          <!-- Hero Banner -->
+          <tr>
+            <td align="center" bgcolor="#2b2d42" style="padding:50px 20px;">
+              <h1 style="color:#ffffff; font-size:28px; margin:0;">Smarter Onboarding. Happier Teams. Stronger Security.</h1>
+            </td>
+          </tr>
+
+          <!-- Body Content -->
+          <tr>
+            <td style="padding:30px; color:#333333;">
+
+              <!-- Intro -->
+              <p style="font-size:16px; line-height:1.6; margin:0 0 20px;">Dear Business Leader,</p>
+              <p style="font-size:16px; line-height:1.6; margin:0 0 20px;">
+                Onboarding shouldn’t be a bottleneck. Yet too often, HR, IT, and department managers get stuck with:
+              </p>
+              <ul style="font-size:16px; line-height:1.6; margin:0 0 20px; padding-left:20px;">
+                <li>Endless <strong>manual data entry</strong></li>
+                <li><strong>Inconsistent account setup</strong> across multiple systems</li>
+                <li><strong>Security risks</strong> from mismanaged permissions</li>
+              </ul>
+
+              <!-- Imagine -->
+              <h2 style="color:#2b2d42; font-size:20px; margin:30px 0 10px;">✨ Imagine This Instead</h2>
+              <p style="font-size:16px; line-height:1.6; margin:0 0 20px;">
+                New employees arrive on Day 1 with:
+              </p>
+              <ul style="font-size:16px; line-height:1.6; margin:0 0 20px; padding-left:20px;">
+                <li>✅ All accounts set up</li>
+                <li>✅ The right permissions assigned</li>
+                <li>✅ Tools ready to go</li>
+                <li>✅ Productivity unlocked instantly</li>
+              </ul>
+              <p style="font-size:16px; line-height:1.6;">That’s the power of <strong>AetherFlow Onboard.</strong></p>
+
+              <!-- Benefits -->
+              <h2 style="color:#2b2d42; font-size:20px; margin:30px 0 10px;">🌟 What AetherFlow Onboard Delivers</h2>
+              <p style="font-size:16px; line-height:1.6;">An AI-powered, cloud-based solution that automates and centralizes your entire onboarding process.</p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="10">
+                <tr>
+                  <td width="50%" style="vertical-align:top; font-size:15px; line-height:1.6;">⏱ <strong>Save Time:</strong><br> Reduce HR & IT manual effort</td>
+                  <td width="50%" style="vertical-align:top; font-size:15px; line-height:1.6;">💡 <strong>Boost Productivity:</strong><br> New hires hit the ground running</td>
+                </tr>
+                <tr>
+                  <td width="50%" style="vertical-align:top; font-size:15px; line-height:1.6;">🔒 <strong>Stay Secure:</strong><br> Role-based access control & encryption</td>
+                  <td width="50%" style="vertical-align:top; font-size:15px; line-height:1.6;">✅ <strong>Ensure Accuracy:</strong><br> Eliminate manual errors across systems</td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="font-size:15px; line-height:1.6; padding-top:10px;">💰 <strong>Save Costs:</strong> Higher ROI through automation & efficiency</td>
+                </tr>
+              </table>
+
+              <!-- Integrations -->
+              <h2 style="color:#2b2d42; font-size:20px; margin:30px 0 10px;">🔗 Seamless Integration with Your Tools</h2>
+              <ul style="font-size:15px; line-height:1.6; margin:0 0 20px; padding-left:20px;">
+                <li><strong>HR Systems (HCM/HRM)</strong> – streamline benefits & employee data</li>
+                <li><strong>ERP Systems</strong> – ensure cross-departmental visibility</li>
+                <li><strong>CRM Platforms (Salesforce, HubSpot)</strong> – empower sales & marketing</li>
+                <li><strong>Collaboration Tools</strong> (Slack, Google Workspace, Microsoft 365, Zoom, Asana, Trello, Monday.com, Wrike) – instant accounts & teamwork</li>
+                <li><strong>Databases & Custom Apps</strong> – manage specialized user access</li>
+              </ul>
+
+              <!-- CTA -->
+              <h2 style="color:#2b2d42; font-size:20px; margin:30px 0 10px;">📈 Why Wait?</h2>
+              <p style="font-size:16px; line-height:1.6; margin:0 0 20px;">
+                Manual onboarding is costing your business time, money, and security. With AetherFlow Onboard, you’ll deliver a world-class onboarding experience while strengthening compliance and efficiency.
+              </p>
+
+              <!-- Buttons -->
+              <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:20px auto;">
+                <tr>
+                  <td align="center" bgcolor="#ef233c" style="border-radius:6px;">
+                    <a href="#" target="_blank" style="display:inline-block; padding:14px 28px; font-size:16px; color:#ffffff; text-decoration:none; font-weight:bold;">🚀 Schedule a Demo</a>
+                  </td>
+                </tr>
+              </table>
+
+              <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:10px auto;">
+                <tr>
+                  <td align="center" bgcolor="#2b2d42" style="border-radius:6px;">
+                    <a href="#" target="_blank" style="display:inline-block; padding:14px 28px; font-size:16px; color:#ffffff; text-decoration:none; font-weight:bold;">🌐 Learn More</a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Signature -->
+              <p style="font-size:16px; line-height:1.6; margin:30px 0 0;">
+                Cheers,<br>
+                <strong>The AetherFlow Team</strong><br>
+                <a href="#" style="color:#ef233c; text-decoration:none;">Visit our website</a> | 
+                <a href="mailto:info@aetherflow.com" style="color:#ef233c; text-decoration:none;">Contact us</a>
+              </p>
+
+            </td>
+          </tr>
+        </table>
+
+        <!-- Footer -->
+        <table role="presentation" width="600" cellpadding="20" cellspacing="0" style="margin-top:20px;">
+          <tr>
+            <td align="center" style="font-size:12px; color:#888888;">
+              © 2025 AetherFlow Inc. | 123 Business Rd, Innovation City, USA<br>
+              You are receiving this email because you subscribed to updates from AetherFlow.<br>
+              <a href="#" style="color:#888888; text-decoration:underline;">Unsubscribe</a>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
