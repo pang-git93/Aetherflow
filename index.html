@@ -1,1 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherFlow Onboard | Intelligent Employee Onboarding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Warm Neutrals) -->
+    <!-- Application Structure Plan: The SPA is structured into thematic, full-screen sections to guide the user on a journey from problem to solution. This non-linear, scannable format is better than a simple text document for a business leader audience who may want to jump to specific points of interest like ROI or Integrations. The flow is: Hero (Intro) -> The Challenge (Problem Visualization) -> The Solution (AetherFlow's automated workflow) -> Value & ROI (Interactive dashboard) -> AI-Powered Blueprint -> Integrations (Interactive discovery) -> CTA. This structure breaks down complex information into digestible, interactive chunks, enhancing comprehension and engagement. -->
+    <!-- Visualization & Content Choices: 
+        - The Challenge: Report Info -> Disconnected, manual onboarding process. Goal -> Organize/Illustrate complexity. Viz/Method -> Interactive diagram with HTML/CSS/JS. Interaction -> Hovering over roles (HR, IT) reveals specific pain points. Justification -> Visually communicates the core problem more effectively than text alone.
+        - Value & ROI: Report Info -> Time savings, cost efficiency, productivity gains. Goal -> Compare/Quantify benefits. Viz/Method -> Interactive bar chart (Chart.js) with sliders. Interaction -> User adjusts sliders for # of new hires and staff cost, chart dynamically updates to show cost savings. Justification -> Personalizes the value proposition, making the ROI tangible and impactful.
+        - AI-Powered Blueprint: Report Info -> The AI-driven nature of AetherFlow. Goal -> Demonstrate the product's intelligence. Viz/Method -> Text input and button to call the Gemini API. Interaction -> User enters a job role, and the app generates a detailed onboarding blueprint. Justification -> Directly demonstrates the core AI capability of the product, moving from a static claim to a live, engaging experience.
+        - Integrations: Report Info -> Long list of integrations. Goal -> Organize/Inform. Viz/Method -> Interactive hub-and-spoke diagram (HTML/CSS/JS). Interaction -> Clicking on a system category (e.g., CRM) displays specific platform logos and details. Justification -> Manages a large amount of information without overwhelming the user, allowing for self-directed exploration.
+        - All other content is presented in clean, scannable cards and text blocks to support the main interactive elements. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4a90e2;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        .integration-icon {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .integration-icon.active, .integration-icon:hover {
+            transform: scale(1.1);
+            border-color: #4a90e2;
+            background-color: #eef5fc;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800">
+                AetherFlow <span class="text-blue-600">Onboard</span>
+            </a>
+            <ul class="hidden md:flex items-center space-x-8">
+                <li><a href="#challenge" class="nav-link text-gray-600 hover:text-blue-600 font-medium">The Challenge</a></li>
+                <li><a href="#solution" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Solution</a></li>
+                <li><a href="#value" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Value & ROI</a></li>
+                 <li><a href="#ai-blueprint" class="nav-link text-gray-600 hover:text-blue-600 font-medium">AI Blueprint</a></li>
+                <li><a href="#integrations" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Integrations</a></li>
+            </ul>
+            <a href="#contact" class="hidden md:inline-block bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors">Schedule Demo</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="min-h-screen flex items-center bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight mb-4">Streamline Your Onboarding. <br> <span class="text-blue-600">Empower Your Team from Day One.</span></h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Introducing the intelligent, AI-powered system to revolutionize your employee onboarding and identity management. Eliminate manual work, enhance security, and make new hires productive instantly.</p>
+                <div class="space-x-4">
+                    <a href="#challenge" class="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105">Discover the Solution</a>
+                    <a href="#contact" class="bg-gray-200 text-gray-800 font-semibold px-8 py-3 rounded-lg hover:bg-gray-300 transition-transform transform hover:scale-105">Request a Demo</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenge" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Onboarding Challenge</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">The complex, multi-departmental process of bringing new talent on board often involves critical information scattered across disconnected systems. Hover over each role to see their common pain points.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="challenge-card p-6 border-2 border-dashed border-red-300 rounded-lg relative">
+                        <h3 class="text-xl font-semibold mb-2 text-red-600">HR Team</h3>
+                        <p>Countless hours on manual data entry.</p>
+                        <div class="challenge-tooltip hidden absolute bottom-full mb-2 w-64 p-3 bg-gray-800 text-white text-sm rounded-lg shadow-xl -ml-32 left-1/2">
+                            Manual data entry leads to errors, delays in benefits setup, and inconsistencies across HR systems.
+                        </div>
+                    </div>
+                    <div class="challenge-card p-6 border-2 border-dashed border-yellow-400 rounded-lg relative">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-600">IT Department</h3>
+                        <p>Inconsistent account creation & permissions.</p>
+                        <div class="challenge-tooltip hidden absolute bottom-full mb-2 w-64 p-3 bg-gray-800 text-white text-sm rounded-lg shadow-xl -ml-32 left-1/2">
+                            Struggles with security risks from improper permissions and delays in providing access to essential tools.
+                        </div>
+                    </div>
+                    <div class="challenge-card p-6 border-2 border-dashed border-green-400 rounded-lg relative">
+                        <h3 class="text-xl font-semibold mb-2 text-green-600">New Hires</h3>
+                        <p>Less-than-ideal start to a new role.</p>
+                        <div class="challenge-tooltip hidden absolute bottom-full mb-2 w-64 p-3 bg-gray-800 text-white text-sm rounded-lg shadow-xl -ml-32 left-1/2">
+                             Frustration and lost productivity while waiting for accounts, access, and necessary tools.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The AetherFlow Solution: Seamless & Automated</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">AetherFlow Onboard transforms a fragmented process into an intelligent, automated workflow. Our AI-powered, cloud-based solution centralizes new employee provisioning, ensuring everyone gets the right access at the right time.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div class="p-6 bg-gray-100 rounded-lg text-center card-hover">
+                        <p class="text-3xl mb-2">1️⃣</p>
+                        <h3 class="text-xl font-semibold">HR Enters New Hire</h3>
+                        <p class="text-gray-600">Info is added once to your core HCM.</p>
+                    </div>
+                     <div class="text-2xl font-bold text-blue-500 animate-pulse">&rarr;</div>
+                    <div class="p-6 bg-blue-100 rounded-lg text-center card-hover">
+                        <p class="text-3xl mb-2">2️⃣</p>
+                        <h3 class="text-xl font-semibold text-blue-800">AetherFlow Takes Over</h3>
+                        <p class="text-gray-600">AI determines role-based access needs.</p>
+                    </div>
+                     <div class="text-2xl font-bold text-blue-500 animate-pulse">&rarr;</div>
+                    <div class="p-6 bg-green-100 rounded-lg text-center card-hover">
+                        <p class="text-3xl mb-2">3️⃣</p>
+                        <h3 class="text-xl font-semibold text-green-800">Productive on Day One</h3>
+                        <p class="text-gray-600">All accounts are ready and waiting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="value" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Problems Solved & Value Delivered</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">From significant time savings to enhanced security, AetherFlow Onboard provides a clear and rapid Return on Investment (ROI).</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Significant Time Savings</h3>
+                        <p class="text-gray-600">Drastically reduces manual effort for HR and IT in setting up new accounts and access.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Enhanced Productivity</h3>
+                        <p class="text-gray-600">Accelerates new employees' time to full productivity with immediate access to all necessary tools.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Improved Security</h3>
+                        <p class="text-gray-600">Automates role-based access control (RBAC), minimizing risks of unauthorized access.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Data Accuracy</h3>
+                        <p class="text-gray-600">Eliminates manual entry errors, creating a "single source of truth" across systems.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Cost Efficiency</h3>
+                        <p class="text-gray-600">Delivers high ROI by streamlining processes and reducing human error.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <h3 class="font-semibold text-xl mb-2">Better Compliance</h3>
+                        <p class="text-gray-600">Ensures access policies are enforced consistently, simplifying audits.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6">Calculate Your Potential ROI</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <div class="mb-4">
+                                <label for="newHires" class="block font-medium text-gray-700">New Hires per Month: <span id="newHiresValue" class="font-bold text-blue-600">10</span></label>
+                                <input type="range" id="newHires" min="1" max="100" value="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            <div class="mb-4">
+                                <label for="manualHours" class="block font-medium text-gray-700">Manual Onboarding Hours per Hire: <span id="manualHoursValue" class="font-bold text-blue-600">8</span></label>
+                                <input type="range" id="manualHours" min="1" max="20" value="8" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            <div>
+                                <label for="avgRate" class="block font-medium text-gray-700">Avg. HR/IT Hourly Rate ($): <span id="avgRateValue" class="font-bold text-blue-600">50</span></label>
+                                <input type="range" id="avgRate" min="20" max="150" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div>
+                             <div class="chart-container">
+                                <canvas id="roiChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-blueprint" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">✨ AI-Powered Role Blueprint ✨</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">Experience the intelligence of AetherFlow. Enter any job title and see how our AI can instantly create a detailed onboarding blueprint for a new hire.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <div class="flex flex-col md:flex-row gap-4 items-end mb-6">
+                        <div class="flex-grow">
+                            <label for="jobRole" class="block text-gray-700 font-semibold mb-2">Job Role</label>
+                            <input type="text" id="jobRole" placeholder="e.g., Senior Software Engineer" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button id="generateBlueprintBtn" class="w-full md:w-auto bg-blue-600 text-white font-semibold px-8 py-2 rounded-lg hover:bg-blue-700 transition-colors">Generate Blueprint</button>
+                    </div>
+                    <div id="blueprintResult" class="mt-6 p-4 border rounded-lg bg-gray-100 text-gray-800">
+                         <p class="text-center text-gray-500">Enter a job role above to generate an instant onboarding blueprint.</p>
+                    </div>
+                    <div id="loadingIndicator" class="hidden flex items-center justify-center mt-6">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                        <span class="ml-4 text-gray-600">Generating blueprint...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="integrations" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Seamless Integration with Your Ecosystem</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">AetherFlow Onboard isn't another silo. It's a central hub that connects deeply with your existing enterprise applications. Click a category to see examples.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-1">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-4">
+                            <div class="integration-icon active flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="hr">
+                                <span class="text-3xl">📇</span>
+                                <p class="font-semibold mt-2 text-sm">HCM/HRM</p>
+                            </div>
+                            <div class="integration-icon flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="erp">
+                                <span class="text-3xl">🏭</span>
+                                <p class="font-semibold mt-2 text-sm">ERP</p>
+                            </div>
+                            <div class="integration-icon flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="crm">
+                                <span class="text-3xl">📈</span>
+                                <p class="font-semibold mt-2 text-sm">CRM</p>
+                            </div>
+                            <div class="integration-icon flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="collab">
+                                <span class="text-3xl">🤝</span>
+                                <p class="font-semibold mt-2 text-sm">Collaboration</p>
+                            </div>
+                             <div class="integration-icon flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="pm">
+                                <span class="text-3xl">📋</span>
+                                <p class="font-semibold mt-2 text-sm">PM Tools</p>
+                            </div>
+                            <div class="integration-icon flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg cursor-pointer" data-target="dbms">
+                                <span class="text-3xl">🗄️</span>
+                                <p class="font-semibold mt-2 text-sm">Databases</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 bg-gray-100 p-8 rounded-lg">
+                        <div id="integration-content">
+                            <div class="integration-pane active" id="hr-content">
+                                <h3 class="text-2xl font-bold mb-4">HR Management Systems</h3>
+                                <p class="mb-4 text-gray-700">Pulls essential new hire data (contact info, department, role) to streamline benefits setup, performance reviews, and more.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Workday</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">SAP SuccessFactors</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">BambooHR</span>
+                                </div>
+                            </div>
+                             <div class="integration-pane hidden" id="erp-content">
+                                <h3 class="text-2xl font-bold mb-4">Enterprise Resource Planning</h3>
+                                <p class="mb-4 text-gray-700">Synchronizes with your ERP to provision access to relevant modules like finance, manufacturing, or project management.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">SAP S/4HANA</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Oracle NetSuite</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Microsoft Dynamics 365</span>
+                                </div>
+                            </div>
+                             <div class="integration-pane hidden" id="crm-content">
+                                <h3 class="text-2xl font-bold mb-4">Customer Relationship Management</h3>
+                                <p class="mb-4 text-gray-700">Instantly creates user profiles and assigns appropriate permissions within your CRM, empowering sales and marketing from day one.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Salesforce</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">HubSpot</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Zoho CRM</span>
+                                </div>
+                            </div>
+                             <div class="integration-pane hidden" id="collab-content">
+                                <h3 class="text-2xl font-bold mb-4">Collaboration & Communication</h3>
+                                <p class="mb-4 text-gray-700">Integrates with platforms like Slack, Google Workspace, and Microsoft 365 for automatic account creation and secure document sharing.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Slack</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Microsoft 365</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Google Workspace</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Zoom</span>
+                                </div>
+                            </div>
+                            <div class="integration-pane hidden" id="pm-content">
+                                <h3 class="text-2xl font-bold mb-4">Project Management Tools</h3>
+                                <p class="mb-4 text-gray-700">Enables automatic user account creation and team assignments in tools like Asana, Trello, and monday.com.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Asana</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Trello</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">monday.com</span>
+                                     <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Wrike</span>
+                                </div>
+                            </div>
+                             <div class="integration-pane hidden" id="dbms-content">
+                                <h3 class="text-2xl font-bold mb-4">Database Management Systems</h3>
+                                <p class="mb-4 text-gray-700">Interfaces directly with various DBMS to manage specific user access to structured data for custom or specialized applications.</p>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">MySQL</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">PostgreSQL</span>
+                                    <span class="bg-white px-4 py-2 rounded-full font-medium shadow-sm">Microsoft SQL Server</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-blue-700 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Ready to see AetherFlow Onboard in action?</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto my-6 text-blue-100">Don't let outdated, manual processes hold your business back. Embrace the future of employee onboarding and transform your new hire experience while boosting operational efficiency and security.</p>
+                <a href="#" class="bg-white text-blue-600 font-bold px-10 py-4 rounded-lg shadow-xl hover:bg-gray-100 transition-transform transform hover:scale-105">Schedule a Personalized Demo Today</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; 2025 AetherFlow Inc. All rights reserved.</p>
+            <p class="text-sm mt-2">[Website Link] | [Contact Information]</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const challengeCards = document.querySelectorAll('.challenge-card');
+            challengeCards.forEach(card => {
+                const tooltip = card.querySelector('.challenge-tooltip');
+                card.addEventListener('mouseenter', () => {
+                    tooltip.classList.remove('hidden');
+                });
+                card.addEventListener('mouseleave', () => {
+                    tooltip.classList.add('hidden');
+                });
+            });
+
+            const roiChartCtx = document.getElementById('roiChart').getContext('2d');
+            let roiChart;
+
+            const newHiresSlider = document.getElementById('newHires');
+            const manualHoursSlider = document.getElementById('manualHours');
+            const avgRateSlider = document.getElementById('avgRate');
+            const newHiresValue = document.getElementById('newHiresValue');
+            const manualHoursValue = document.getElementById('manualHoursValue');
+            const avgRateValue = document.getElementById('avgRateValue');
+            
+            const AETHERFLOW_HOURS_PER_HIRE = 0.5;
+
+            function calculateCosts() {
+                const hires = parseInt(newHiresSlider.value);
+                const hours = parseInt(manualHoursSlider.value);
+                const rate = parseInt(avgRateSlider.value);
+
+                newHiresValue.textContent = hires;
+                manualHoursValue.textContent = hours;
+                avgRateValue.textContent = rate;
+
+                const manualCost = hires * hours * rate;
+                const aetherflowCost = hires * AETHERFLOW_HOURS_PER_HIRE * rate;
+                
+                return [manualCost, aetherflowCost];
+            }
+
+            function updateChart() {
+                const [manualCost, aetherflowCost] = calculateCosts();
+                roiChart.data.datasets[0].data[0] = manualCost;
+                roiChart.data.datasets[0].data[1] = aetherflowCost;
+                roiChart.options.plugins.title.text = `Estimated Monthly Savings: $${(manualCost - aetherflowCost).toLocaleString()}`;
+                roiChart.update();
+            }
+
+            function createChart() {
+                const [manualCost, aetherflowCost] = calculateCosts();
+                roiChart = new Chart(roiChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Manual Onboarding', 'With AetherFlow'],
+                        datasets: [{
+                            label: 'Estimated Monthly Onboarding Cost ($)',
+                            data: [manualCost, aetherflowCost],
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.6)',
+                                'rgba(59, 130, 246, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(59, 130, 246, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                             title: {
+                                display: true,
+                                text: `Estimated Monthly Savings: $${(manualCost - aetherflowCost).toLocaleString()}`,
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 20
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            createChart();
+            newHiresSlider.addEventListener('input', updateChart);
+            manualHoursSlider.addEventListener('input', updateChart);
+            avgRateSlider.addEventListener('input', updateChart);
+
+            const integrationIcons = document.querySelectorAll('.integration-icon');
+            const integrationPanes = document.querySelectorAll('.integration-pane');
+
+            integrationIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const target = icon.dataset.target;
+
+                    integrationIcons.forEach(i => i.classList.remove('active'));
+                    icon.classList.add('active');
+
+                    integrationPanes.forEach(pane => {
+                        if (pane.id === `${target}-content`) {
+                            pane.classList.remove('hidden');
+                            pane.classList.add('active');
+                        } else {
+                            pane.classList.add('hidden');
+                            pane.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            const header = document.getElementById('header');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+                threshold: 0.4
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            const generateBtn = document.getElementById('generateBlueprintBtn');
+            const jobRoleInput = document.getElementById('jobRole');
+            const resultDiv = document.getElementById('blueprintResult');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            generateBtn.addEventListener('click', async () => {
+                const jobRole = jobRoleInput.value.trim();
+                if (!jobRole) {
+                    resultDiv.innerHTML = '<p class="text-center text-red-500">Please enter a job role.</p>';
+                    return;
+                }
+
+                loadingIndicator.classList.remove('hidden');
+                resultDiv.innerHTML = '';
+                
+                try {
+                    const systemPrompt = `You are an expert HR and IT specialist for a modern tech company. Your task is to generate a comprehensive "Day One Onboarding Blueprint" for a new employee. This blueprint must be structured with clear, bolded headings. The content should be practical and detailed, as if it were to be used to provision a new hire. The blueprint must contain four sections with the following exact titles: "Core Responsibilities:", "Required Software/Tools:", "Required System Access/Permissions:", and "Key Onboarding Milestones (First 30/60/90 Days):".`;
+                    const userQuery = `Create a Day One Onboarding Blueprint for the job role: ${jobRole}.`;
+                    
+                    const payload = {
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        systemInstruction: {
+                            parts: [{ text: systemPrompt }]
+                        },
+                        tools: [{ "google_search": {} }],
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    if (generatedText) {
+                        const formattedText = generatedText.replace(/\*\*(.*?):\*\*/g, '<h3>$1:</h3>');
+                        resultDiv.innerHTML = `<div>${formattedText}</div>`;
+                    } else {
+                         resultDiv.innerHTML = '<p class="text-center text-red-500">Failed to generate a blueprint. Please try again.</p>';
+                    }
+                } catch (error) {
+                    resultDiv.innerHTML = `<p class="text-center text-red-500">An error occurred: ${error.message}.</p>`;
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
 
