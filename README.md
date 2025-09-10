@@ -1,2 +1,0 @@
-# Aetherflow
-School Project
